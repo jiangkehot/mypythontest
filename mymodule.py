@@ -41,13 +41,12 @@ def isPrime_while(n):
 
 def isPrime_seive(n=200):
     '筛子法素数判断法：利用列表下标（数组思想）'
-    seive = [bool(x * 0 + 1) for x in range(n + 1)]
+    seive = [True for x in range(n + 1)]
     for x in range(2,int(sqrt(n))+1):
         if seive[x]:
-            for x in range(x ** 2,n + 1,x):
+            for x in range(x * x,n + 1,x):
                 seive[x] = False
     return seive[n]
-#    print([x for x in range(2,n+1) if seive[x]])
           
 def isPrime(n,isPrime = isPrime_for): 
 #    return isPrime_seive(n)
