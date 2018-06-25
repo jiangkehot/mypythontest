@@ -11,14 +11,16 @@ from bs4 import BeautifulSoup
 import random
 import time
 
+#程序开始执行时间
 tstart = time.time()
 
-for i in range(501,601):
+for i in range(100,200):
     url = 'http://zdb.pedaily.cn/inv/p' + str(i) + '/'
     r = requests.get(url)
     soup = BeautifulSoup(r.text,'lxml')
     news = soup.find('div','list-time list-zdb list-invest')
 #    strnews = str(news.prettify())
+
     j = (i-1) // 100
     filename = 'filename'+ '{:>02}'.format(j) + '.html'
 
@@ -46,17 +48,21 @@ for i in range(501,601):
 #                        strdown = str(dt['class']) + ':' + dt.string
 #                        f.write(strdown)
         
-        s = random.randint(1,2)
+#生产一个随机数，作为访问服务器的时间间隔
+        s = random.randint(1,20)
         time.sleep(s)
+#截止到目前，程序执行总计用时
         timenow = time.time()
         tt = (timenow - tstart) / 60
         print('第{0:2d}次更新，{1:2d}s后再次更新，总计用时{2:>5.2f}min'.format(i,s,tt))
                 
 def newsprettify(filename):
+    '格式化函数'
     soup = BeautifulSoup(open(filename,'r'),'lxml')
     news = soup.prettify()
     strnews = str(news)
     with open(filename,'w') as f:
         f.write(strnews)
         
+#执行格式化函数，将文本文件格式化
 newsprettify(filename)
